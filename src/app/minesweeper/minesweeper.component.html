@@ -1,5 +1,5 @@
 <div class="ms-container">
-	<h3>Minesweeper</h3>
+  <app-category-header [category]="'Minesweeper'" [filename]="''"></app-category-header>
 
   <div class="settings" *ngIf="!gameStarted">
     <label>Zeilen: <input type="number" [(ngModel)]="rows" min="4" max="30"></label>
@@ -18,7 +18,7 @@
     <div class="action-buttons">
       <button class="action" [class.active]="action==='open'" (click)="action='open'">Öffnen</button>
       <button class="action" [class.active]="action==='flag'" (click)="action='flag'">Flagge</button>
-      <button class="start-btn" (click)="resetGame()">Zurück</button>
+      <button class="start-btn" (click)="resetGame()">Neustart</button>
     </div>
     <div class="status">
       <span *ngIf="!gameOver">Laufend — verbleibende Flaggen: {{remainingFlags}}</span>

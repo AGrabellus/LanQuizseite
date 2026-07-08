@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CategoryHeaderComponent } from '../shared/category-header/category-header.component';
 
 interface Cell {
   revealed: boolean;
@@ -12,7 +13,7 @@ interface Cell {
 @Component({
   selector: 'app-minesweeper',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CategoryHeaderComponent],
   templateUrl: './minesweeper.component.html',
   styleUrl: './minesweeper.component.css'
 })

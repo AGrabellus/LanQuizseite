@@ -1,11 +1,17 @@
 <div class="home">
 	<div class="header">
 		<h1>🎓 Quiz Master</h1>
-		<p class="subtitle">Teste dein Wissen mit unseren interaktiven Quizzen</p>
+		<p class="subtitle">Teste dein Wissen mit Quizzen!</p>
 	</div>
 	<div class="boxes">
 		<div class="box">
-			<h2>📚 Anklickbar</h2>
+			<div class="box-header">
+				<h2>📚 Anklickbar</h2>
+				<div class="tooltip-wrapper">
+					<span class="info-icon" tabindex="0" aria-label="Mehr über Anklickbar">i</span>
+					<span class="tooltip-text">Wähle die passende Antwort zu dem oben stehenden Text aus!</span>
+				</div>
+			</div>
 			<div class="box-content">
 				<div *ngIf="anklickbarFiles().length === 0" class="empty-message">Keine Beispiele gefunden.</div>
 				<div *ngFor="let f of anklickbarFiles()" class="resource-item">
@@ -19,7 +25,13 @@
 		</div>
 
 		<div class="box">
-			<h2>🎮 Smart10</h2>
+			<div class="box-header">
+				<h2>🎮 Smart10</h2>
+				<div class="tooltip-wrapper">
+					<span class="info-icon" tabindex="0" aria-label="Mehr über Smart10">i</span>
+					<span class="tooltip-text">Wähle die richtigen Antworten aus, vermeide die Falschen!</span>
+				</div>
+			</div>
 			<div class="box-content">
 				<div *ngIf="smart10Files().length === 0" class="empty-message">Keine Beispiele gefunden.</div>
 				<div *ngFor="let f of smart10Files()" class="resource-item">
@@ -33,7 +45,13 @@
 		</div>
 
 				<div class="box">
-			<h2>🧩 Memory</h2>
+			<div class="box-header">
+				<h2>🧩 Memory</h2>
+				<div class="tooltip-wrapper">
+					<span class="info-icon" tabindex="0" aria-label="Mehr über Memory">i</span>
+					<span class="tooltip-text">Finde die richtigen Paare!</span>
+				</div>
+			</div>
 			<div class="box-content">
 				<div *ngIf="memoryFiles().length === 0" class="empty-message">Keine Beispiele gefunden.</div>
 				<div *ngFor="let f of memoryFiles()" class="resource-item">
@@ -45,6 +63,9 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="section-divider"></div>
+		<h3 class="section-heading">🧩 Weitere Apps 🎮</h3>
 
 		<div class="box">
 			<h2>🎲 Würfel</h2>

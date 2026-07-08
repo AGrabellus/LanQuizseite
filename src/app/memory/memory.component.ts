@@ -20,8 +20,10 @@ interface MemoryCard {
 }
 
 interface MemoryPair {
-  image: string;
-  text: string;
+  first: string;
+  second: string;
+  firstType: 'image' | 'text';
+  secondType: 'image' | 'text';
 }
 
 @Component({
@@ -92,36 +94,55 @@ export class MemoryComponent implements OnInit {
     const lines = content.split('\n').filter(line => line.trim());
     this.pairs = [];
     lines.forEach(line => {
-      const parts = line.split('|').map(p => p.trim().replace(/"/g, ''));
-      if (parts.length === 2) {
+      const parts = this.splitPairLine(line);
+      if (parts.length >= 2) {
+        const [first, second] = parts;
         this.pairs.push({
-          image: parts[0],
-          text: parts[1]
+          first,
+          second,
+          firstType: this.getCardType(first),
+          secondType: this.getCardType(second)
         });
       }
     });
+  }
+
+  private splitPairLine(line: string): string[] {
+    const trimmed = line.trim();
+    if (trimmed.includes('||')) {
+      return trimmed.split('||').map(part => part.trim().replace(/"/g, ''));
+    }
+
+    return trimmed.split('|').map(part => part.trim().replace(/"/g, ''));
+  }
+
+  private isImageValue(value: string): boolean {
+    const normalized = value.trim().toLowerCase();
+    return /\.(png|jpe?g|webp|gif|bmp|svg|ico|tiff?|avif)$/i.test(normalized)
+      || normalized.startsWith('data:image/')
+      || /^https?:\/\//i.test(normalized);
+  }
+
+  private getCardType(value: string): 'image' | 'text' {
+    return this.isImageValue(value) ? 'image' : 'text';
   }
 
   initializeGame(): void {
     this.cards = [];
     let id = 0;
     this.pairs.forEach(pair => {
-      // Add image card
-      this.cards.push({
-        id: id++,
-        type: 'image',
-        content: pair.image,
-        isFlipped: false,
-        isMatched: false
-      });
-      // Add text card
-      this.cards.push({
-        id: id++,
-        type: 'text',
-        content: pair.text,
-        isFlipped: false,
-        isMatched: false
-      });
+      const addCard = (content: string, type: 'image' | 'text') => {
+        this.cards.push({
+          id: id++,
+          type,
+          content,
+          isFlipped: false,
+          isMatched: false
+        });
+      };
+
+      addCard(pair.first, pair.firstType);
+      addCard(pair.second, pair.secondType);
     });
     // Shuffle cards
     this.cards = this.shuffleArray(this.cards);
@@ -151,8 +172,8 @@ export class MemoryComponent implements OnInit {
 
   checkMatch(): void {
     const [card1, card2] = this.flippedCards;
-    const pair1 = this.pairs.find(p => p.image === card1.content || p.text === card1.content);
-    const pair2 = this.pairs.find(p => p.image === card2.content || p.text === card2.content);
+    const pair1 = this.pairs.find(p => p.first === card1.content || p.second === card1.content);
+    const pair2 = this.pairs.find(p => p.first === card2.content || p.second === card2.content);
 
     if (pair1 === pair2) {
       // Match

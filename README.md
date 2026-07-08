@@ -35,3 +35,14 @@ beispielsweise unter:
 ```text
 src/assets/resources/Anklickbar
 ```
+
+## Überblick über die Apps
+
+- Anklickbar: Wähle die passende Antwort zu dem oben stehenden Text aus!
+- Smart10: Wähle die richtigen Antworten aus, vermeide die falschen!
+- Memory: Finde die richtigen Paare!
+
+Zusatz-Apps:
+
+- Würfel
+- Minesweeper
