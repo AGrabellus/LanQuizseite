@@ -33,7 +33,12 @@
       </div>
 
       <div class="question-box">
-        <h2>{{ getCurrentQuestion() }}</h2>
+        <ng-container *ngIf="getDisplayType(getCurrentQuestion()) === 'image'; else textQuestion">
+          <img class="question-image" [src]="getValueResourceUrl(getCurrentQuestion()) || ''" [alt]="getCurrentQuestion() || 'Fragebild'" />
+        </ng-container>
+        <ng-template #textQuestion>
+          <h2>{{ getCurrentQuestion() }}</h2>
+        </ng-template>
       </div>
 
       <!-- Answer preview hidden now -->
@@ -50,7 +55,12 @@
           [class.correct]="item[1]"
           (click)="selectAnswer(item[0])"
         >
-          <span class="q-text">{{ item[0] }}</span>
+          <ng-container *ngIf="getDisplayType(item[0]) === 'image'; else textAnswer">
+            <img class="answer-image" [src]="getValueResourceUrl(item[0]) || ''" [alt]="item[0]" />
+          </ng-container>
+          <ng-template #textAnswer>
+            <span class="q-text">{{ item[0] }}</span>
+          </ng-template>
         </button>
       </div>
     </div>

@@ -147,6 +147,18 @@
 	line-height: 1.4;
 }
 
+.question-image,
+.answer-image {
+	max-width: 100%;
+	max-height: 220px;
+	object-fit: contain;
+	border-radius: 8px;
+}
+
+.answer-image {
+	max-height: 140px;
+}
+
 .answer-preview {
 	background: rgba(255,255,255,0.02);
 	padding: 0.75rem;
