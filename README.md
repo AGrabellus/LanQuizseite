@@ -27,13 +27,11 @@ npm run maniFestErstellen
 Neue Inhalte für die Quizze kommen in den Ordner
 
 ```text
-src/assets/
+src/assets/resources
 ```
 
 beispielsweise unter:
 
 ```text
-src/assets/resources/
+src/assets/resources/Anklickbar
 ```
-
-Dort können Bilder, Audio-Dateien, Textdateien oder andere Ressourcen abgelegt werden.
