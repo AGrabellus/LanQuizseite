@@ -1,0 +1,31 @@
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.category-header .back {
+  background: linear-gradient(180deg,#2b6cb0,#1e4fa0);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.category-header .title {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-header .category {
+  font-weight: 700;
+  color: #e6eef8;
+}
+
+.category-header .file {
+  font-size: 0.9rem;
+  color: #cfe8ff;
+}

@@ -1,0 +1,79 @@
+.wuerfel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #081122 0%, #0b1624 100%);
+  color: #e6eef8;
+}
+
+.wuerfel-container h2 {
+  margin: 0 0 1rem 0;
+  color: #4fb871;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.wuerfel-container p {
+  margin: 0 0 2rem 0;
+  color: #cfe8ff;
+  font-size: 1.1rem;
+}
+
+.dice-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.dice-btn {
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(79, 184, 113, 0.2);
+  border-radius: 8px;
+  color: #e6eef8;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dice-btn:hover {
+  border-color: rgba(79, 184, 113, 0.4);
+  box-shadow: 0 8px 16px rgba(79, 184, 113, 0.1);
+  transform: translateY(-2px);
+}
+
+.dice-btn.animating {
+  animation: roll 1s ease-in-out;
+}
+
+@keyframes roll {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(90deg); }
+  50% { transform: rotate(180deg); }
+  75% { transform: rotate(270deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.result {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(79, 184, 113, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 300px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(2, 6, 23, 0.5);
+}
+
+.result h3 {
+  margin: 0;
+  color: #4fb871;
+  font-size: 1.5rem;
+  font-weight: 700;
+}

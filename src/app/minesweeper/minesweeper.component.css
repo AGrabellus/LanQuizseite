@@ -1,0 +1,167 @@
+:host { display: block; }
+.ms-container {
+  max-width: 820px;
+  margin: 20px auto;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(180deg, #081122 0%, #0b1624 100%);
+  padding: 24px;
+  border-radius: 24px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  color: #e6eef8;
+}
+
+h3 {
+  margin: 0 0 18px 0;
+  font-size: 2rem;
+  color: #f1f8ff;
+}
+
+.settings {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.settings label {
+  font-size: 0.95rem;
+  color: #cfe8ff;
+}
+
+.settings input {
+  width: 70px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: #f4f9ff;
+}
+
+.status {
+  margin-top: 10px;
+  font-weight: 700;
+  color: #dbe9ff;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.action,
+.start-btn {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f1f9ff;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.action:hover,
+.start-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}
+
+.action.active {
+  background: linear-gradient(180deg, #4fb871, #3d9659);
+  border-color: rgba(79, 184, 113, 0.5);
+  color: #fff;
+}
+
+.start-btn {
+  background: linear-gradient(180deg, #2b6cb0, #1e4fa0);
+}
+
+.board {
+  margin-top: 18px;
+  display: grid;
+  gap: 8px;
+  justify-content: center;
+}
+
+.cell {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  cursor: pointer;
+  color: #e6eef8;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cell:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.cell.revealed {
+  background: #f8fafc;
+  color: #111827;
+  border-color: rgba(79, 184, 113, 0.30);
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.18);
+  cursor: default;
+}
+
+.cell.revealed:not(.bomb):not(.flagged) {
+  background: #f1f5f9;
+}
+
+.cell.bomb {
+  background: linear-gradient(180deg, #c53030, #f87171);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.cell.flagged {
+  background: linear-gradient(180deg, #7c3aed, #a78bfa);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+
+.num1 { color: #0d4f8b; }
+.num2 { color: #166534; }
+.num3 { color: #b91c1c; }
+.num4 { color: #4338ca; }
+.num5 { color: #b45309; }
+.num6 { color: #115e59; }
+.num7 { color: #0f172a; }
+.num8 { color: #111827; }
+
+@media (max-width: 620px) {
+  .ms-container { padding: 16px; }
+  .settings,
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .action-buttons { justify-content: center; }
+  .cell { width: 36px; height: 36px; }
+  .settings input { width: 56px; }
+}

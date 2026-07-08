@@ -1,0 +1,8 @@
+<div class="category-header">
+  <button class="back" (click)="goBack()">← Zurück</button>
+
+  <div class="title">
+    <div class="category">{{ category }}</div>
+    <div class="file" *ngIf="displayFilename">{{ displayFilename }}</div>
+  </div>
+</div>

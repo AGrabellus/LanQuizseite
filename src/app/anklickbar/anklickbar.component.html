@@ -1,0 +1,76 @@
+<div class="anklickbar-page">
+  <app-category-header [category]="'Anklickbar'" [filename]="filename"></app-category-header>
+
+  <!-- Ready State: Show Start Button -->
+  <div class="ready-state" *ngIf="quizState === 'ready' && qaMap && qaMap.size > 0">
+    <div class="start-container">
+      <h2>Quiz bereit</h2>
+      <p>{{ totalQuestions }} Fragen warten auf dich</p>
+      <button class="start-btn" (click)="startQuiz()">Quiz starten</button>
+    </div>
+  </div>
+
+  <!-- Started State: Show Quiz -->
+  <ng-container *ngIf="quizState === 'started'">
+    <!-- Stats Section -->
+    <div class="stats-section">
+      <div class="stat">
+        <span class="stat-label">Richtig</span>
+        <span class="stat-value">{{ correctCount }}/{{ totalQuestions }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Zeit</span>
+        <span class="stat-value">{{ elapsedSeconds }}s</span>
+      </div>
+    </div>
+
+    <!-- Question Section (Top) -->
+    <div class="question-section" *ngIf="getCurrentQuestion()">
+      <div class="question-nav">
+        <button class="nav-btn" (click)="prevQuestion()">← Vorherige</button>
+        <div class="question-counter">{{ currentQuestionIndex + 1 }} / {{ remainingQuestions }}</div>
+        <button class="nav-btn" (click)="nextQuestion()">Nächste →</button>
+      </div>
+
+      <div class="question-box">
+        <h2>{{ getCurrentQuestion() }}</h2>
+      </div>
+
+      <!-- Answer preview hidden now -->
+    </div>
+
+    <!-- Answers Section (Bottom) -->
+    <div class="answers-section" [class.wrong-effect]="showWrongEffect" *ngIf="qaMap && qaMap.size > 0">
+      <h2>Antworten</h2>
+      <div class="answers-list">
+        <button
+          *ngFor="let item of getUnansweredAnswers()"
+          class="answer-btn"
+          [disabled]="item[1]"
+          [class.correct]="item[1]"
+          (click)="selectAnswer(item[0])"
+        >
+          <span class="q-text">{{ item[0] }}</span>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Finished State: Show Results -->
+  <div class="finished-state" *ngIf="quizState === 'finished'">
+    <div class="results-container">
+      <h2>Quiz abgeschlossen!</h2>
+      <div class="results-stats">
+        <div class="result-item">
+          <span class="result-label">Richtige Antworten</span>
+          <span class="result-value">{{ correctCount }}/{{ totalQuestions }}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Zeit</span>
+          <span class="result-value">{{ elapsedSeconds }}s</span>
+        </div>
+      </div>
+      <button class="back-btn" (click)="goBack()">Zurück</button>
+    </div>
+  </div>
+</div>
