@@ -1,0 +1,107 @@
+<div class="smart10-page">
+  <app-category-header [category]="'Smart10'" [filename]="'Smart10'"></app-category-header>
+
+  <!-- Ready State: Player Setup -->
+  <div class="ready-state" *ngIf="gameState === 'ready'">
+    <div class="setup-container">
+      <h2>👥 Spieler Setup</h2>
+      <p class="subtitle">Füge mindestens einen Spieler hinzu</p>
+
+      <!-- Players List -->
+      <div class="players-list">
+        <div *ngIf="players.length === 0" class="no-players">Noch keine Spieler hinzugefügt</div>
+        <div *ngFor="let player of players" class="player-item">
+          <span class="player-name">{{ player.name }}</span>
+          <button class="remove-btn" (click)="removePlayer(player.id)">✕</button>
+        </div>
+      </div>
+
+      <!-- Add Player Input -->
+      <div class="add-player-section">
+        <button class="add-player-btn" (click)="togglePlayerInput()" *ngIf="!showPlayerInput">
+          ➕ Spieler hinzufügen
+        </button>
+
+        <div class="player-input" *ngIf="showPlayerInput">
+          <input
+            type="text"
+            [(ngModel)]="newPlayerName"
+            placeholder="Name eingeben..."
+            (keyup.enter)="addPlayer()"
+            class="name-input"
+          />
+          <button class="save-btn" (click)="addPlayer()">Speichern</button>
+          <button class="cancel-btn" (click)="togglePlayerInput()">Abbrechen</button>
+        </div>
+      </div>
+
+      <!-- Start Button -->
+      <button class="start-btn" (click)="startGame()" [disabled]="players.length === 0">
+        🎮 Spiel starten
+      </button>
+    </div>
+  </div>
+
+  <!-- Started State: Game Board -->
+  <ng-container *ngIf="gameState === 'started'">
+    <div class="game-container">
+      <div class="game-header">
+        <div class="current-player">
+          <span class="label">Aktueller Spieler</span>
+          <span class="player-name">{{ players[currentPlayerIndex].name }}</span>
+        </div>
+        <div class="game-actions">
+          <button class="pass-btn" (click)="passForRest()" title="Ich denke alles ist richtig, ich passe bis zum Ende">
+            🤐 Passen
+          </button>
+          <button class="end-game-btn" (click)="endGame()">⏹️ Spiel beenden</button>
+        </div>
+      </div>
+
+      <div class="game-board">
+        <div class="questions-grid">
+          <button 
+            *ngFor="let question of questions"
+            class="question-button"
+            [class.answered]="question.answered"
+            [class.correct]="question.answered && question.isCorrect"
+            [class.wrong]="question.answered && !question.isCorrect"
+            [disabled]="question.answered"
+            (click)="answerQuestion(question)"
+          >
+            {{ question.text }}
+          </button>
+        </div>
+      </div>
+
+      <div class="players-scoreboard">
+        <h3>📊 Punkte</h3>
+        <div class="scoreboard">
+          <div *ngFor="let player of players; let i = index" class="score-item" [class.active]="i === currentPlayerIndex">
+            <span class="player-name">{{ player.name }}</span>
+            <div class="score-details">
+              <span class="score-correct">{{ player.score }} ✓</span>
+              <span class="score-errors" *ngIf="player.errors > 0">{{ player.errors }} ✗</span>
+              <span class="score-final">= {{ getPlayerFinalScore(player) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Finished State: Results -->
+  <div class="finished-state" *ngIf="gameState === 'finished'">
+    <div class="results-container">
+      <h2>🏆 Spiel abgeschlossen!</h2>
+      <div class="results-list">
+        <div *ngFor="let player of getSortedPlayers(); let i = index" class="result-item">
+          <span class="rank">{{ i + 1 }}.</span>
+          <span class="player-name">{{ player.name }}</span>
+          <span class="score-breakdown">{{ player.score }} ✓ - {{ player.errors }} ✗ = <strong>{{ getPlayerFinalScore(player) }}</strong> Punkte</span>
+        </div>
+      </div>
+      <button class="back-btn" (click)="goBack()">Zurück</button>
+    </div>
+  </div>
+</div>

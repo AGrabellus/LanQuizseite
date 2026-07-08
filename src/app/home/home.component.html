@@ -1,0 +1,84 @@
+<div class="home">
+	<div class="header">
+		<h1>🎓 Quiz Master</h1>
+		<p class="subtitle">Teste dein Wissen mit unseren interaktiven Quizzen</p>
+	</div>
+	<div class="boxes">
+		<div class="box">
+			<h2>📚 Anklickbar</h2>
+			<div class="box-content">
+				<div *ngIf="anklickbarFiles().length === 0" class="empty-message">Keine Beispiele gefunden.</div>
+				<div *ngFor="let f of anklickbarFiles()" class="resource-item">
+					<div class="resource-row">
+						<span class="resource-name">{{ getDisplayName(f) }}</span>
+						<button class="load-btn" (click)="openCategory(f)">▶ Starten</button>
+					</div>
+					<pre class="loaded" *ngIf="loadedContent[f]">{{ loadedContent[f] }}</pre>
+				</div>
+			</div>
+		</div>
+
+		<div class="box">
+			<h2>🎮 Smart10</h2>
+			<div class="box-content">
+				<div *ngIf="smart10Files().length === 0" class="empty-message">Keine Beispiele gefunden.</div>
+				<div *ngFor="let f of smart10Files()" class="resource-item">
+					<div class="resource-row">
+						<span class="resource-name">{{ getDisplayName(f) }}</span>
+						<button class="load-btn" (click)="openSmart10(f)">▶ Starten</button>
+					</div>
+					<pre class="loaded" *ngIf="loadedContent[f]">{{ loadedContent[f] }}</pre>
+				</div>
+			</div>
+		</div>
+
+				<div class="box">
+			<h2>🧩 Memory</h2>
+			<div class="box-content">
+				<div *ngIf="memoryFiles().length === 0" class="empty-message">Keine Beispiele gefunden.</div>
+				<div *ngFor="let f of memoryFiles()" class="resource-item">
+					<div class="resource-row">
+						<span class="resource-name">{{ getDisplayName(f) }}</span>
+						<button class="load-btn" (click)="openMemory(f)">▶ Starten</button>
+					</div>
+					<pre class="loaded" *ngIf="loadedContent[f]">{{ loadedContent[f] }}</pre>
+				</div>
+			</div>
+		</div>
+
+		<div class="box">
+			<h2>🎲 Würfel</h2>
+			<div class="box-content">
+				<button class="load-btn" (click)="openWuerfel()">▶ Starten</button>
+			</div>
+		</div>
+
+<!-- 		<div class="box">
+			<h2>♟️ Brettspiel</h2>
+			<div class="box-content">
+				<button class="load-btn" (click)="openBrettspiel()">▶ Starten</button>
+			</div>
+		</div> -->
+<!-- 
+		<div class="box">
+			<h2>💡 Perfect Match</h2>
+			<div class="box-content">
+				<button class="load-btn" (click)="openPerfectMatch()">▶ Starten</button>
+			</div>
+		</div> -->
+
+				<div class="box">
+			<h2>💥 Minesweeper</h2>
+			<div class="box-content">
+				<button class="load-btn" (click)="openMinesweeper()">▶ Starten</button>
+			</div>
+		</div>
+
+		<!-- <div class="box">
+			<h2>🧧 Rubbellose</h2>
+			<div class="box-content">
+				<button class="load-btn" (click)="openRubbellose()">▶ Starten</button>
+			</div>
+		</div> -->
+	</div>
+</div>

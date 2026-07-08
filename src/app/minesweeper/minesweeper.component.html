@@ -1,0 +1,48 @@
+<div class="ms-container">
+	<h3>Minesweeper</h3>
+
+  <div class="settings" *ngIf="!gameStarted">
+    <label>Zeilen: <input type="number" [(ngModel)]="rows" min="4" max="30"></label>
+    <label>Spalten: <input type="number" [(ngModel)]="cols" min="4" max="30"></label>
+    <label>Bomben: <input type="number" [(ngModel)]="bombs" min="1"></label>
+
+    <div class="action-buttons">
+      <button class="action" [class.active]="action==='open'" (click)="action='open'">Öffnen</button>
+      <button class="action" [class.active]="action==='flag'" (click)="action='flag'">Flagge</button>
+    </div>
+
+    <button class="start" (click)="startGame()">Spiel starten</button>
+  </div>
+
+  <div class="toolbar" *ngIf="gameStarted">
+    <div class="action-buttons">
+      <button class="action" [class.active]="action==='open'" (click)="action='open'">Öffnen</button>
+      <button class="action" [class.active]="action==='flag'" (click)="action='flag'">Flagge</button>
+      <button class="start-btn" (click)="resetGame()">Zurück</button>
+    </div>
+    <div class="status">
+      <span *ngIf="!gameOver">Laufend — verbleibende Flaggen: {{remainingFlags}}</span>
+      <span *ngIf="gameOver && win">Gewonnen! 🎉</span>
+      <span *ngIf="gameOver && !win">Verloren 💥</span>
+    </div>
+  </div>
+
+  <div *ngIf="gameStarted" class="board" [style.gridTemplateColumns]="'repeat(' + cols + ', 40px)'">
+    <ng-container *ngFor="let row of grid; let r = index">
+      <ng-container *ngFor="let cell of row; let c = index">
+        <button
+          class="cell"
+          [class.revealed]="cell.revealed"
+          [class.bomb]="cell.revealed && cell.hasBomb"
+          [class.flagged]="cell.flagged"
+          (click)="onCellClick(r,c)"
+          (contextmenu)="onRightClick($event,r,c)"
+        >
+          <span *ngIf="cell.flagged">🚩</span>
+          <span *ngIf="!cell.flagged && cell.revealed && cell.hasBomb">💣</span>
+          <span *ngIf="!cell.flagged && cell.revealed && !cell.hasBomb && cell.adjacent>0" [ngClass]="'num' + cell.adjacent">{{cell.adjacent}}</span>
+        </button>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

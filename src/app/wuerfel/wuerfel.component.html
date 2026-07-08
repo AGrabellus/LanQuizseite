@@ -1,0 +1,18 @@
+<app-category-header [category]="'Würfel'" [filename]="''"></app-category-header>
+
+<div class="wuerfel-container">
+  <h2>🎲 Würfel</h2>
+  <p>Wähle einen Würfel aus:</p>
+
+  <div class="dice-buttons">
+    <button class="dice-btn" [class.animating]="animatingDice === 'd2'" (click)="rollDice('d2')">d2</button>
+    <button class="dice-btn" [class.animating]="animatingDice === 'd4'" (click)="rollDice('d4')">d4</button>
+    <button class="dice-btn" [class.animating]="animatingDice === 'd6'" (click)="rollDice('d6')">d6</button>
+    <button class="dice-btn" [class.animating]="animatingDice === 'd20'" (click)="rollDice('d20')">d20</button>
+    <button class="dice-btn" [class.animating]="animatingDice === 'd100'" (click)="rollDice('d100')">d100</button>
+  </div>
+
+  <div class="result" *ngIf="result">
+    <h3>Ergebnis: {{ result }}</h3>
+  </div>
+</div>
