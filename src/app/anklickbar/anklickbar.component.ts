@@ -19,6 +19,7 @@ export class AnklickbarComponent implements OnInit, OnDestroy {
   private location = inject(Location);
 
   filename: string | null = null;
+  quizFolder: string = '';
   content: string | null = null;
   qaMap: Map<string, string> = new Map();  // Original map for validation
   questionsList: string[] = [];  // Remaining questions to answer
@@ -40,7 +41,9 @@ export class AnklickbarComponent implements OnInit, OnDestroy {
         return;
       }
       this.filename = decodeURIComponent(raw);
+      this.quizFolder = this.getQuizFolderFromFilename(this.filename);
       console.log('📂 Decoded filename:', this.filename);
+      console.log('📁 Quiz folder:', this.quizFolder);
       this.loadFile(this.filename);
     });
   }
@@ -88,6 +91,77 @@ export class AnklickbarComponent implements OnInit, OnDestroy {
     }
 
     return `/assets/resources/Anklickbar/${normalized}`;
+  }
+
+  private getQuizFolderFromFilename(filename: string): string {
+    const normalized = filename.replace(/\\/g, '/').replace(/^\/+/, '').replace(/\.txt$/i, '');
+    const parts = normalized.split('/').filter(Boolean);
+
+    return parts[parts.length - 1] || '';
+  }
+
+  private isImageValue(value: string | null | undefined): boolean {
+    if (!value) {
+      return false;
+    }
+
+    const normalized = value.trim().toLowerCase();
+    return /\.(png|jpe?g|webp|gif|bmp|svg|ico|tiff?|avif)$/i.test(normalized)
+      || normalized.startsWith('data:image/')
+      || /^https?:\/\//i.test(normalized);
+  }
+
+  getDisplayType(value: string | null | undefined): 'image' | 'text' {
+    return this.isImageValue(value) ? 'image' : 'text';
+  }
+
+  getValueResourceUrl(value: string | null | undefined): string | null {
+    if (!value) {
+      return null;
+    }
+
+    const trimmed = value.trim();
+    if (!trimmed) {
+      return null;
+    }
+
+    if (!this.isImageValue(trimmed)) {
+      return null;
+    }
+
+    if (trimmed.startsWith('data:image/') || /^https?:\/\//i.test(trimmed) || trimmed.startsWith('/')) {
+      return trimmed;
+    }
+
+    if (trimmed.startsWith('assets/resources/')) {
+      return `/${trimmed}`;
+    }
+
+    const relativePath = trimmed.replace(/^\.\//, '').replace(/^\/+/, '');
+    const quizName = this.filename?.replace(/\\/g, '/').split('/').pop()?.replace(/\.txt$/i, '') || '';
+    const normalizedQuizName = quizName.replace(/^Anklickbar/i, '').replace(/^\/+/, '');
+    const folderCandidates = [
+      normalizedQuizName,
+      this.quizFolder.replace(/^Anklickbar/i, ''),
+      this.quizFolder,
+      quizName,
+      this.quizFolder.replace(/^\/+/, ''),
+      normalizedQuizName.toLowerCase(),
+      normalizedQuizName.charAt(0).toUpperCase() + normalizedQuizName.slice(1)
+    ].filter(Boolean);
+
+    const uniqueCandidates = Array.from(new Set(folderCandidates));
+    const candidates = uniqueCandidates.flatMap(folder => {
+      const cleanFolder = folder.replace(/^\/+/, '').replace(/\/+$/g, '');
+      return [
+        `/assets/resources/Anklickbar/${cleanFolder}/${relativePath}`,
+        `/assets/resources/Anklickbar/${relativePath}`,
+        `/assets/resources/${cleanFolder}/${relativePath}`,
+        `/assets/resources/${relativePath}`
+      ];
+    });
+
+    return candidates.find(candidate => candidate) || null;
   }
 
   private parseToMap(text: string): Map<string, string> {
