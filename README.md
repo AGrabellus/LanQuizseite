@@ -1,27 +1,39 @@
-# LanQuizSeite
+# Entwicklung
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.7.
+Für die Entwicklung werden Node.js und npm benötigt.
 
-## Development server
+- Node.js: 18 oder 20 LTS (empfohlen)
+- npm: 9+ (kommt meist mit Node.js)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Beispiel in bash:
 
-## Code scaffolding
+```bash
+nvm install --lts
+nvm use --lts
+npm install -g @angular/cli@17
+cd /pfad/zum/projekt
+npm install
+npm start
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Damit die Dateien in diesem Ordner für die Quizze erkannt werden, bei NEUEN Dateien im assets Ordner ausführen:
 
-## Build
+```bash
+npm run maniFestErstellen
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Neue Dateien hinterlegen
 
-## Running unit tests
+Neue Inhalte für die Quizze kommen in den Ordner
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```text
+src/assets/
+```
 
-## Running end-to-end tests
+beispielsweise unter:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```text
+src/assets/resources/
+```
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Dort können Bilder, Audio-Dateien, Textdateien oder andere Ressourcen abgelegt werden.
