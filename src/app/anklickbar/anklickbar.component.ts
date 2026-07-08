@@ -46,11 +46,11 @@ export class AnklickbarComponent implements OnInit, OnDestroy {
   }
 
   private loadFile(name: string) {
-    const url = `/assets/resources/${name}`;
-    
+    const url = this.getResourceUrl(name);
+
     this.http.get(url, { responseType: 'text' }).subscribe(
       (txt) => {
-        
+
         this.content = txt;
         this.qaMap = this.parseToMap(txt);
         this.questionsList = Array.from(this.qaMap.keys());
@@ -66,6 +66,28 @@ export class AnklickbarComponent implements OnInit, OnDestroy {
         this.answersMap = new Map();
       }
     );
+  }
+
+  private getResourceUrl(name: string): string {
+    const normalized = name.trim().replace(/^\/+/, '').replace(/\\/g, '/');
+
+    if (!normalized) {
+      return '/assets/resources/';
+    }
+
+    if (normalized.startsWith('assets/resources/')) {
+      return `/${normalized}`;
+    }
+
+    if (normalized.startsWith('Anklickbar/')) {
+      return `/assets/resources/${normalized}`;
+    }
+
+    if (normalized.includes('/')) {
+      return `/assets/resources/${normalized}`;
+    }
+
+    return `/assets/resources/Anklickbar/${normalized}`;
   }
 
   private parseToMap(text: string): Map<string, string> {

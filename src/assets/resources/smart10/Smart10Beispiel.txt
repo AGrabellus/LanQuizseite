@@ -1,0 +1,2 @@
+Ist Berlin die Hauptstadt von Deutschland?|true
+Ist der Mount Everest der höchste Berg der Welt?|true

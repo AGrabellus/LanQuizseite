@@ -58,8 +58,7 @@ export class MemoryComponent implements OnInit {
       }
       this.filename = decodeURIComponent(raw);
       console.log('📂 Decoded filename:', this.filename);
-      // Extract folder name: remove "Memory" prefix and ".txt" suffix
-      this.folder = this.filename.replace(/^Memory/i, '').replace(/\.txt$/i, '');
+      this.folder = this.getFolderFromFilename(this.filename);
       console.log('📁 Folder:', this.folder);
       this.loadMemoryData();
     });
@@ -76,6 +75,17 @@ export class MemoryComponent implements OnInit {
         console.error('Error loading memory file:', err);
       }
     });
+  }
+
+  private getFolderFromFilename(filename: string): string {
+    const normalized = filename.replace(/\\/g, '/').replace(/^\/+/, '').replace(/\.txt$/i, '');
+    const parts = normalized.split('/').filter(Boolean);
+
+    if (parts.length >= 2) {
+      return parts[parts.length - 2];
+    }
+
+    return parts[0]?.replace(/^memory/i, '') || '';
   }
 
   parsePairs(content: string): void {
