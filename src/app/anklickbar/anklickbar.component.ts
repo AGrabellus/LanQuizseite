@@ -111,8 +111,27 @@ export class AnklickbarComponent implements OnInit, OnDestroy {
       || /^https?:\/\//i.test(normalized);
   }
 
-  getDisplayType(value: string | null | undefined): 'image' | 'text' {
-    return this.isImageValue(value) ? 'image' : 'text';
+  private isAudioValue(value: string | null | undefined): boolean {
+    if (!value) {
+      return false;
+    }
+
+    const normalized = value.trim().toLowerCase();
+    return /\.(mp3|ogg|wav)$/i.test(normalized)
+      || normalized.startsWith('data:audio/')
+      || /^https?:\/\//i.test(normalized);
+  }
+
+  getDisplayType(value: string | null | undefined): 'image' | 'audio' | 'text' {
+    if (this.isImageValue(value)) {
+      return 'image';
+    }
+
+    if (this.isAudioValue(value)) {
+      return 'audio';
+    }
+
+    return 'text';
   }
 
   getValueResourceUrl(value: string | null | undefined): string | null {
@@ -125,11 +144,11 @@ export class AnklickbarComponent implements OnInit, OnDestroy {
       return null;
     }
 
-    if (!this.isImageValue(trimmed)) {
+    if (!this.isImageValue(trimmed) && !this.isAudioValue(trimmed)) {
       return null;
     }
 
-    if (trimmed.startsWith('data:image/') || /^https?:\/\//i.test(trimmed) || trimmed.startsWith('/')) {
+    if (trimmed.startsWith('data:') || /^https?:\/\//i.test(trimmed) || trimmed.startsWith('/')) {
       return trimmed;
     }
 

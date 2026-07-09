@@ -155,6 +155,12 @@
 	border-radius: 8px;
 }
 
+.question-audio,
+.answer-audio {
+	width: 100%;
+	max-width: 320px;
+}
+
 .answer-image {
 	max-height: 140px;
 }

@@ -33,9 +33,14 @@
       </div>
 
       <div class="question-box">
-        <ng-container *ngIf="getDisplayType(getCurrentQuestion()) === 'image'; else textQuestion">
+        <ng-container *ngIf="getDisplayType(getCurrentQuestion()) === 'image'; else audioQuestion">
           <img class="question-image" [src]="getValueResourceUrl(getCurrentQuestion()) || ''" [alt]="getCurrentQuestion() || 'Fragebild'" />
         </ng-container>
+        <ng-template #audioQuestion>
+          <ng-container *ngIf="getDisplayType(getCurrentQuestion()) === 'audio'; else textQuestion">
+            <audio class="question-audio" controls [src]="getValueResourceUrl(getCurrentQuestion()) || ''"></audio>
+          </ng-container>
+        </ng-template>
         <ng-template #textQuestion>
           <h2>{{ getCurrentQuestion() }}</h2>
         </ng-template>
@@ -55,9 +60,14 @@
           [class.correct]="item[1]"
           (click)="selectAnswer(item[0])"
         >
-          <ng-container *ngIf="getDisplayType(item[0]) === 'image'; else textAnswer">
+          <ng-container *ngIf="getDisplayType(item[0]) === 'image'; else audioAnswer">
             <img class="answer-image" [src]="getValueResourceUrl(item[0]) || ''" [alt]="item[0]" />
           </ng-container>
+          <ng-template #audioAnswer>
+            <ng-container *ngIf="getDisplayType(item[0]) === 'audio'; else textAnswer">
+              <audio class="answer-audio" controls [src]="getValueResourceUrl(item[0]) || ''"></audio>
+            </ng-container>
+          </ng-template>
           <ng-template #textAnswer>
             <span class="q-text">{{ item[0] }}</span>
           </ng-template>
